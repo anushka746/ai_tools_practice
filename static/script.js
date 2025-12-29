@@ -76,7 +76,7 @@ form.addEventListener("submit", async (e) => {
     console.log(data);
 
     // Backend asks for location
-    if (data.statusEl === "NEED_LOCATION") {
+    if (data.status === "NEED_LOCATION") {
       showStatus(
         "I need your location to answer this. Asking for permission…"
       );
