@@ -1,0 +1,41 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Weather & Crypto Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="card">
+      <header class="header">
+        <h1>Assistant</h1>
+        <p class="subtitle">Weather & Crypto, instantly</p>
+      </header>
+
+      <form id="query-form" class="input-area" autocomplete="off">
+        <div class="input-wrapper">
+          <input
+            id="queryInput"
+            type="text"
+            placeholder="Ask about weather or crypto…"
+            required
+          />
+          <span class="focus-ring"></span>
+        </div>
+        <button type="submit" class="cta">
+          <span class="cta-label">Ask</span>
+        </button>
+      </form>
+
+      <div id="status" class="status hidden"></div>
+
+      <section id="results" class="results hidden"></section>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
