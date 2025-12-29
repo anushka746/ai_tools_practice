@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,6 +21,7 @@
             type="text"
             placeholder="Ask about weather or crypto…"
             required
+            aria-label="Query input"
           />
           <span class="focus-ring"></span>
         </div>
@@ -30,9 +30,9 @@
         </button>
       </form>
 
-      <div id="status" class="status hidden"></div>
+      <div id="status" class="status hidden" role="status" aria-live="polite"></div>
 
-      <section id="results" class="results hidden"></section>
+      <section id="results" class="results hidden" aria-live="polite"></section>
     </section>
   </main>
 

@@ -21,11 +21,14 @@ function showStatus(text) {
 function renderResultCards(result) {
   results.innerHTML = "";
   results.classList.remove("hidden");
+  results.classList.add("show");
   statusEl.classList.add("hidden"); 
 
-  Object.entries(result).forEach(([key, value]) => {
+  Object.entries(result).forEach(([key, value],index) => {
     const card = document.createElement("div");
     card.className = "result-card";
+
+  
 
     const title = document.createElement("div");
     title.className = "result-title";
@@ -37,6 +40,8 @@ function renderResultCards(result) {
 
     card.append(title, val);
     results.appendChild(card);
+
+    setTimeout(() => card.classList.add("show"), index * 50);
   });
 }
 

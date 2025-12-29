@@ -20,27 +20,49 @@ def weather_tool(city: Optional[str] = None,
         print(data["main"])
         
         if "main" in data:
-            # Convert from Kelvin to Celsius
-            temp_kelvin = data["main"]["temp"]
-            temp_celsius = round(temp_kelvin - 273.15, 2)
+            
+            main = data["main"]
+
+            # Temperatures
+            temp_celsius = round(main.get("temp", 0) - 273.15, 2)
+            feels_like_celsius = round(main.get("feels_like", 0) - 273.15, 2)
+
+            # Humidity
+            humidity = main.get("humidity", 0)
+            if humidity < 30:
+                humidity_label = "Dry"
+            elif humidity <= 60:
+                humidity_label = "Comfortable"
+            else:
+                humidity_label = "Humid"
+
+            # Pressure
+            pressure = main.get("pressure", 0)
+            if pressure < 1000:
+                pressure_label = "Low"
+            elif pressure <= 1020:
+                pressure_label = "Normal"
+            else:
+                pressure_label = "High"
+
+         
+
             return {
-            "city": city if city else data.get("name"),
-            "temperature": temp_celsius,
-            "temperature_unit": "celsius",
-            "humidity": data["main"]["humidity"],
-            "humidity_label": (
-                "dry" if data["main"]["humidity"] < 30
-                else "comfortable" if data["main"]["humidity"] < 60
-                else "humid"),
-            "pressure": data["main"]["pressure"],
-            "pressure_label": (
-                "low" if data["main"]["pressure"] < 1000
-                else "high" if data["main"]["pressure"] > 1020
-                else "normal"),
-            "condition": data["weather"][0]["description"]
-        }
+                "City": city or data.get("name", "Unknown location"),
+                "Temperature": f"{temp_celsius} °C",
+                "Feels Like": f"{feels_like_celsius} °C",
+                "Humidity": f"{humidity}%",
+                "Humidity Label": humidity_label,
+                "Pressure": f"{pressure} hPa",
+                "Pressure Label": pressure_label,
+                
+            }
+
         else:
-            return {"error": data.get("message", "Unable to fetch weather data")}
+            return {"error": "Weather data unavailable for this location."}
+
+ 
+           
     
     except Exception as e:
         return {"status": "ERROR", "reason": f"Network/API error: {e}"}
