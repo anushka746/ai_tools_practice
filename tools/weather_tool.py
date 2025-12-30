@@ -75,7 +75,7 @@ def weather_tool(city: Optional[str] = None,
  
            
     
-    except requests.exceptions.RequestExceptione:
+    except requests.exceptions.RequestException:
         return { "status": "ERROR",
             "message": "Unable to reach weather service. Please try again."}
 
