@@ -71,9 +71,12 @@ def crypto_tool(coin:str):
         if coin in trusted_symbols:
             coin_id = trusted_symbols [coin]
 
-        # 2️⃣ Full coin name (bitcoin, ethereum, etc.)
+        #Full coin name (bitcoin, ethereum, etc.)
         elif coin in name_map:
             coin_id = name_map[coin]
+            
+        else:
+            return {"message": f"Coin '{coin}' is not recognized"}
        
         url=f"https://api.coingecko.com/api/v3/simple/price?ids={coin_id}&vs_currencies=usd&include_market_cap=true&include_24hr_change=true"
         response = requests.get(url, timeout=10)
