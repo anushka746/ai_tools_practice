@@ -21,3 +21,7 @@ ENV/
 .DS_Store
 Thumbs.db
 
+# CoinGecko coin list cache
+coin_list_cache.json
+
+

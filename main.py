@@ -77,17 +77,18 @@ async def query_endpoint(user_query: UserQuery):
         
         if "city" in args and args["city"]:
             result = weather_tool(city=args.get("city"), location=None)
-            return {"status": "SUCCESS","result":result}
+            
+            
                 
         elif user_query.latitude is not None and user_query.longitude is not None:
-             result = weather_tool(
+            result = weather_tool(
                 city=None,
                 location={
                     "lat": user_query.latitude,
                     "lon": user_query.longitude
                 }
             )
-             return {"status": "SUCCESS","result":result}
+            
        
         else:
             return {
@@ -95,6 +96,12 @@ async def query_endpoint(user_query: UserQuery):
             "message": "Please allow location access to get weather for your area, or specify a city name.",
             "tool": "weather_tool"
         }
+        if "message" in result:
+            return {"message": result["message"]}   
+        
+        
+        return {"status": "SUCCESS","result":result}
+    
     
     elif tool_name == "crypto_tool":
         if "coin" not in args or not args["coin"]:
@@ -103,6 +110,9 @@ async def query_endpoint(user_query: UserQuery):
                 "message": "Coin name is required for crypto queries."
             }
         result = crypto_tool(coin=args["coin"])
+        if "message" in result:
+            return {"message": result["message"]} 
+        
         return {"status": "SUCCESS","result": result}
     else:
         return {"status": "ERROR", "message": "Unsupported request."}

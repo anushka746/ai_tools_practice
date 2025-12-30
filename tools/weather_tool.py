@@ -6,7 +6,7 @@ def weather_tool(city: Optional[str] = None,
     location: Optional[Dict] = None):
     api_key = os.getenv("OPENWEATHER_API_KEY")
     if not api_key:
-        return {"error": "OPENWEATHER_API_KEY environment variable is required. Please set it in your .env file."}
+        return {"message": "OPENWEATHER_API_KEY environment variable is required. Please set it in your .env file."}
     if city:
         url=f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}"
     elif location and "lat"in location and "lon" in location:
@@ -15,9 +15,19 @@ def weather_tool(city: Optional[str] = None,
         return { "message":"Please provide a city name or give location access to get the weather."}
     try:
         response = requests.get(url, timeout=10)
+        
+        if response.status_code == 404:
+            return {
+                "status": "ERROR",
+                "message": "Please enter the full city name (e.g. New York instead of NYC)."
+            }
+
+        
+        
+    
         response.raise_for_status()  # Raises an HTTPError for bad responses
         data = response.json()
-        print(data["main"])
+        #print(data["main"])
         
         if "main" in data:
             
@@ -59,11 +69,13 @@ def weather_tool(city: Optional[str] = None,
             }
 
         else:
-            return {"error": "Weather data unavailable for this location."}
+            return {"status": "ERROR",
+                    "message": "Weather data unavailable for this location."}
 
  
            
     
-    except Exception as e:
-        return {"status": "ERROR", "reason": f"Network/API error: {e}"}
+    except requests.exceptions.RequestExceptione:
+        return { "status": "ERROR",
+            "message": "Unable to reach weather service. Please try again."}
 
